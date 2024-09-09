@@ -24,6 +24,49 @@ data class Views(
     val count: Int = 0
 )
 
+abstract class Attachment(
+    val type: String
+)
+data class Photo(
+    val id: Int = 1,
+    val ownerId: Int = 1,
+    val photo130: String = "https://vk.com/some_photo_link",
+    val photo604: String = "https://vk.com/another_photo_link"
+) : Attachment("photo")
+data class Video(
+    val id: Int = 1,
+    val ownerId: Int = 1,
+    val title: String = "A Funny Video",
+    val durtionVideo: Int = 30
+) : Attachment("video")
+data class Audio(
+    val id: Int,
+    val ownerId: Int,
+    val artist: String,
+    val title: String,
+    val durtion: Int,
+    val url: String,
+    val lyricsId: Int?,
+    val albumId: Int?,
+    val genreId: Int,
+    val date: Int,
+    val noSearch: Boolean = true,
+    val isHd: Boolean,
+) : Attachment("audio")
+data class Geo(
+    val geoType: Int,
+    val latitude: Int,
+    val longitude: Int,
+) : Attachment("geo")
+
+data class Graffiti(
+    val id: Int,
+    val ownerId: Int,
+    val url: String,
+    val width: Int,
+    val height: Int
+) : Attachment("graffiti")
+
 data class Post(
     var id: Int = 0,
     val ownerId: Int,
@@ -31,10 +74,11 @@ data class Post(
     val createdBy: Int,
     val publishDate: Int,
     val postText: String,
-    val comments: Comments,
-    val likes: Likes,
-    val reposts: Reposts,
-    val views: Views
+    val comments: Comments?,
+    val likes: Likes?,
+    val reposts: Reposts?,
+    val views: Views?,
+    val attachments: Array<Attachment>?
 )
 
 object WallService {
