@@ -1,5 +1,15 @@
 package ru.netolohy
 
+abstract class Attachment(
+    val type: String
+)
+
+data class PhotoAttachment(val photo: Photo) : Attachment("photo")
+data class VideoAttachment(val video: Video) : Attachment("video")
+data class AudioAttachment(val audio: Audio) : Attachment("audio")
+data class GeoAttachment(val geo: Geo) : Attachment("geo")
+data class GraffitiAttachment(val graffiti: Graffiti) : Attachment("graffiti")
+
 data class Comments(
     val count: Int = 0,
     val canPost: Boolean = true,
@@ -24,9 +34,6 @@ data class Views(
     val count: Int = 0
 )
 
-abstract class Attachment(
-    val type: String
-)
 data class Photo(
     val id: Int = 1,
     val ownerId: Int = 1,
@@ -37,14 +44,14 @@ data class Video(
     val id: Int = 1,
     val ownerId: Int = 1,
     val title: String = "A Funny Video",
-    val durtionVideo: Int = 30
+    val durationVideo: Int = 30
 ) : Attachment("video")
 data class Audio(
     val id: Int,
     val ownerId: Int,
     val artist: String,
     val title: String,
-    val durtion: Int,
+    val duration: Int,
     val url: String,
     val lyricsId: Int?,
     val albumId: Int?,
@@ -78,7 +85,7 @@ data class Post(
     val likes: Likes?,
     val reposts: Reposts?,
     val views: Views?,
-    val attachments: Array<Attachment>?
+    val attachments: Array<Attachment> = emptyArray()
 )
 
 object WallService {
@@ -110,5 +117,4 @@ object WallService {
 }
 
 fun main() {
-
 }

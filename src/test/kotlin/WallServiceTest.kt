@@ -21,8 +21,9 @@ class WallServiceTest {
         val likes = Likes(0,false,true, canPublish = true)
         val reposts = Reposts()
         val views = Views()
+        val attachments = arrayOf(Photo(), Video())
         val post = Post(0,ownerId,fromId,createdBy,publishDate,postText,comments,
-            likes,reposts,views,attachments = null)
+            likes,reposts,views,attachments)
         val result = WallService.add(post)
 
         assertEquals(1, result.id)
@@ -39,8 +40,9 @@ class WallServiceTest {
         val likes = Likes(0,false,true, canPublish = true)
         val reposts = Reposts()
         val views = Views()
+        val attachments = arrayOf(Photo(), Video())
         val post = Post(1,ownerId,fromId,createdBy,publishDate,postText,comments,
-            likes,reposts,views,attachments = null)
+            likes,reposts,views,attachments)
         val testPost = WallService.add(post)
         val result = WallService.update(post)
 
@@ -58,8 +60,11 @@ class WallServiceTest {
         val likes = Likes(0,false,true, canPublish = true)
         val reposts = Reposts()
         val views = Views()
+        val photo = Photo();
+        val video = Video();
+        val attachments = arrayOf(Photo(), Video())
         val post = Post(id,ownerId,fromId,createdBy,publishDate,postText,comments,
-            likes,reposts,views, attachments = null)
+            likes,reposts,views, attachments)
         val result = WallService.update(post)
 
         assertEquals(false, result)
