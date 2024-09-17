@@ -1,5 +1,9 @@
 package ru.netolohy
 
+import java.sql.RowId
+
+class PostNotFoundException(message: String) : RuntimeException(message)
+
 abstract class Attachment(
     val type: String
 )
@@ -10,12 +14,11 @@ data class AudioAttachment(val audio: Audio) : Attachment("audio")
 data class GeoAttachment(val geo: Geo) : Attachment("geo")
 data class GraffitiAttachment(val graffiti: Graffiti) : Attachment("graffiti")
 
-data class Comments(
-    val count: Int = 0,
-    val canPost: Boolean = true,
-    val groupsCanPost: Boolean = false,
-    val canClose: Boolean = true,
-    val canOpen: Boolean = false
+data class Comment(
+    val commentId: Int = 0,
+    val commentUserId: Int = 0,
+    val commentDate: Int = 0,
+    val commentText: String = ""
 )
 
 data class Likes(
@@ -81,15 +84,15 @@ data class Post(
     val createdBy: Int,
     val publishDate: Int,
     val postText: String,
-    val comments: Comments?,
+    val comment: Comment?,
     val likes: Likes?,
     val reposts: Reposts?,
     val views: Views?,
     val attachments: Array<Attachment> = emptyArray()
 )
-
 object WallService {
     private var posts = emptyArray<Post>()
+    private var comments = emptyArray<Comment>()
     private var id: Int = 0
 
     fun add(post: Post): Post {
@@ -110,11 +113,20 @@ object WallService {
         return flag
     }
 
-    fun clear() {
+    fun createComment(postId: Int, comment: Comment): Comment {
+        if (id < postId) {
+            throw PostNotFoundException("Create Comment Error - Post not found")
+        }
+        comments += comment
+        return comment
+    }
+
+        fun clear() {
         posts = emptyArray()
         id = 0
     }
 }
 
 fun main() {
+
 }

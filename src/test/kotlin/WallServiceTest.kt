@@ -17,7 +17,7 @@ class WallServiceTest {
         val createdBy = 123
         val publishDate = 101023
         val postText = "First post"
-        val comments = Comments()
+        val comments = Comment()
         val likes = Likes(0,false,true, canPublish = true)
         val reposts = Reposts()
         val views = Views()
@@ -36,7 +36,7 @@ class WallServiceTest {
         val createdBy = 123
         val publishDate = 101023
         val postText = "First post edited"
-        val comments = Comments()
+        val comments = Comment()
         val likes = Likes(0,false,true, canPublish = true)
         val reposts = Reposts()
         val views = Views()
@@ -56,7 +56,7 @@ class WallServiceTest {
         val createdBy = 123
         val publishDate = 101023
         val postText = "First post edited"
-        val comments = Comments()
+        val comments = Comment()
         val likes = Likes(0,false,true, canPublish = true)
         val reposts = Reposts()
         val views = Views()
@@ -68,5 +68,22 @@ class WallServiceTest {
         val result = WallService.update(post)
 
         assertEquals(false, result)
+    }
+    @Test(expected = PostNotFoundException::class)
+    fun shouldThrow() {
+        val ownerId = 32768
+        val fromId = 10
+        val createdBy = 123
+        val publishDate = 101023
+        val postText = "First post with comment"
+        val comments = Comment()
+        val likes = Likes(0,false,true, canPublish = true)
+        val reposts = Reposts()
+        val views = Views()
+        val attachments = arrayOf(Photo(), Video())
+        val post = Post(0,ownerId,fromId,createdBy,publishDate,postText,comments,
+            likes,reposts,views,attachments)
+        val result = WallService.add(post)
+        WallService.createComment(10,Comment(5,23, 23233,"my first comment"))
     }
 }
