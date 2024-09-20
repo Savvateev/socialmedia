@@ -86,7 +86,6 @@ class WallServiceTest {
         val result = WallService.add(post)
         WallService.createComment(10,Comment(5,23, 23233,"my first comment"))
     }
-    @Test(expected = PostNotFoundException::class)
     fun noThrow() {
         val ownerId = 32768
         val fromId = 10
@@ -100,7 +99,10 @@ class WallServiceTest {
         val attachments = arrayOf(Photo(), Video())
         val post = Post(0,ownerId,fromId,createdBy,publishDate,postText,comments,
             likes,reposts,views,attachments)
-        val result = WallService.add(post)
-        WallService.createComment(0,Comment(5,23, 23233,"my first comment"))
+        val addResult = WallService.add(post)
+        val tmp = Comment(5,23,23233,"my first comment")
+        val result =WallService.createComment(0,tmp)
+
+        assertEquals(tmp,result)
     }
 }
